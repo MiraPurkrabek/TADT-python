@@ -7,7 +7,7 @@ from tadt_tracker import Tadt_Tracker
 from backbone_v2 import build_vgg16
 
 def load_sequece(root_path):
-    img_list = (glob.glob(join(root_path, '*/img/*.jpg')))
+    img_list = (glob.glob(join(root_path, '*/img/*.png')))
     img_list.sort()
     gt_path = glob.glob(join(root_path, '*/*.txt'))
 
@@ -24,24 +24,30 @@ if __name__ == "__main__":
     from defaults import _C as cfg
     import time
     import torch
-    assert(False), 'please download "imagenet-vgg-verydeep-16.mat" from "http://www.vlfeat.org/matconvnet/models/imagenet-vgg-verydeep-16.mat" and set its path in defaults.py'
+    assert(True), 'please download "imagenet-vgg-verydeep-16.mat" from "http://www.vlfeat.org/matconvnet/models/imagenet-vgg-verydeep-16.mat" and set its path in defaults.py'
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    root_path = join(realpath(dirname(__file__)),'sequences/')
+    print("Device:", device)
+    root_path = join(realpath(dirname(__file__)),'sequences')
+    print("Rootpath:", root_path)
     img_list, gt_bboxes = load_sequece(root_path)
+    print("Sequence loaded...")
+    #print(img_list)
+    #print(gt_bboxes)
 
     #------------------demo------------------------------------------------------------------
     model = build_vgg16(cfg)
+    print("Model build...")
     tracker = Tadt_Tracker(cfg, model = model, device = device, display = True)
     tracker.initialize_tadt(img_list[0], gt_bboxes[0])
     #if want to visualize the selected feature, uncomment these lines
-    #tracker.visualize_feature(
-    #                        features = tracker.features,
-    #                        stage = 'conv4_3',
-    #                        srch_window_size = (180,180),
-    #                        subwindow = tracker.subwindow,
-    #                        feature_weights = tracker.feature_weights,
-    #                        balance_weights = tracker.balance_weights
-    #                        )
+    tracker.visualize_feature(
+                            features = tracker.features,
+                            stage = 'conv4_3',
+                            srch_window_size = (180,180),
+                            subwindow = tracker.subwindow,
+                            feature_weights = tracker.feature_weights,
+                            balance_weights = tracker.balance_weights
+                            )
     for i in range(1, len(img_list)):
        tracker.tracking(img_list[i], i)
 

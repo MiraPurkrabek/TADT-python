@@ -15,7 +15,7 @@ from yacs.config import CfgNode as CN
 
 # -----------------------------------------------------------------------------
 # Config definition
-# -----------------------------------------------------------------------------
+# ----------------------------VGG-------------------------------------------------
 
 _C = CN()
 
@@ -45,4 +45,7 @@ _C.BACKBONE.VGG16.BN_EVAL = False
 _C.BACKBONE.VGG16.BN_FROZEN = False
 _C.BACKBONE.VGG16.CEIL_MODEL = False
 _C.BACKBONE.VGG16.OUT_INDICES = ['conv4_1', 'conv4_3']
-_C.BACKBONE.VGG16.PRETRAIN_MAT = join(realpath(dirname(__file__)),'imagenet-vgg-verydeep-16.mat')
+#_C.BACKBONE.VGG16.PRETRAIN_MAT = join(realpath(dirname('pretrained/')),'imagenet-vgg-verydeep-16.mat')
+_C.BACKBONE.VGG16.PRETRAIN_MAT = join(realpath(dirname('./pretrained/')),'imagenet-vgg-verydeep-16.mat')
+print("Pretrained model:", _C.BACKBONE.VGG16.PRETRAIN_MAT)
+#_C.BACKBONE.VGG16.PRETRAIN_MAT = 'imagenet-vgg-verydeep-16.mat'
