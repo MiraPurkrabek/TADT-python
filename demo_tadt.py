@@ -7,7 +7,7 @@ from tadt_tracker import Tadt_Tracker
 from backbone_v2 import build_vgg16
 
 def load_sequece(root_path):
-    img_list = (glob.glob(join(root_path, '*/img/*.png')))
+    img_list = (glob.glob(join(root_path, '*/img/*.jpg')))
     img_list.sort()
     gt_path = glob.glob(join(root_path, '*/*.txt'))
 
